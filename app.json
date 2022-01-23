@@ -19,16 +19,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "userInterfaceStyle": "automatic"
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+      "userInterfaceStyle": "automatic"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "description": ""
   }
 }

@@ -21,6 +21,7 @@ import MessageScreen from '../screens/MessageScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import ProfilePicture from '../components/ProfilePicture';
+import NewPostScreen from '../screens/NewPostScreen';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -43,6 +44,7 @@ function RootNavigator() {
     <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <Stack.Screen name="NewPost" component={NewPostScreen} options={{ headerShown: false }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
@@ -90,7 +92,7 @@ function BottomTabNavigator() {
           headerTitle: () => <Image style={styles.logo} source={require('../assets/images/logo1x.png')} />,
           tabBarIcon: ({ color }) => <AntDesign name="home" color={color} size={30} />,
           headerLeft: () => (
-            <ProfilePicture image={''} size={30} />
+            <ProfilePicture image={'https://picsum.photos/30/30'} size={30} />
           ),
           headerRight: () => (
             <Pressable
