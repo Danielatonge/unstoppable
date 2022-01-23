@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-unstoppable-dev-110559-authRole",
+      "UnauthRoleArn": "arn:aws:iam::535166975454:role/amplify-unstoppable-dev-110559-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::535166975454:role/amplify-unstoppable-dev-110559-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-unstoppable-dev-110559-deployment",
+      "UnauthRoleName": "amplify-unstoppable-dev-110559-unauthRole",
+      "StackName": "amplify-unstoppable-dev-110559",
+      "StackId": "arn:aws:cloudformation:us-east-1:535166975454:stack/amplify-unstoppable-dev-110559/4f32ed80-7c23-11ec-8831-0e6872da20a5",
+      "AmplifyAppId": "d3spsidnyu5g21"
+    },
+    "categories": {
+      "auth": {
+        "unstoppable7dfbef1e": {}
+      }
+    }
+  }
+}
