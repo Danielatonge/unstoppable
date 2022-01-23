@@ -3,21 +3,24 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, AntDesign, Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import { ColorSchemeName, Pressable, Image, StyleSheet } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import HomeScreen from '../screens/HomeScreen';
+import SearchScreen from '../screens/SearchScreen';
+import NotificationScreen from '../screens/NotificationScreen';
+import MessageScreen from '../screens/MessageScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import ProfilePicture from '../components/ProfilePicture';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -46,7 +49,18 @@ function RootNavigator() {
     </Stack.Navigator>
   );
 }
-
+const styles = StyleSheet.create({
+  logo: {
+    width: 30,
+    height: 30,
+    alignContent: 'center',
+  },
+  profilePic: {
+    width: 35,
+    height: 35,
+    alignContent: 'center',
+  }
+})
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
@@ -58,38 +72,59 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarShowLabel: false
       }}>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        name="Home"
+        component={HomeScreen}
+        options={({ navigation }: RootTabScreenProps<'Home'>) => ({
+          headerLeftContainerStyle: {
+            paddingLeft: 15,
+          },
+          headerRightContainerStyle: {
+            paddingRight: 15,
+          },
+          headerTitle: () => <Image style={styles.logo} source={require('../assets/images/logo1x.png')} />,
+          tabBarIcon: ({ color }) => <AntDesign name="home" color={color} size={30} />,
+          headerLeft: () => (
+            <ProfilePicture image={''} size={30} />
+          ),
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
+              <AntDesign name="setting" color={Colors[colorScheme].tint} size={30} />
             </Pressable>
           ),
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
+        name="Search"
+        component={SearchScreen}
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Search',
+          tabBarIcon: ({ color }) => <AntDesign name="search1" color={color} size={30} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Notifications"
+        component={NotificationScreen}
+        options={{
+          title: 'Notifications',
+          tabBarIcon: ({ color }) => <Ionicons name="notifications-outline" color={color} size={30} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Messages"
+        component={MessageScreen}
+        options={{
+          title: 'Messages',
+          tabBarIcon: ({ color }) => <AntDesign name="message1" color={color} size={30} />,
         }}
       />
     </BottomTab.Navigator>
