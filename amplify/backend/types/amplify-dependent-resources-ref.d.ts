@@ -9,5 +9,18 @@ export type AmplifyDependentResourcesAttributes = {
             "AppClientIDWeb": "string",
             "AppClientID": "string"
         }
+    },
+    "api": {
+        "unstoppable": {
+            "GraphQLAPIKeyOutput": "string",
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
+        }
+    },
+    "storage": {
+        "unstoppable01": {
+            "BucketName": "string",
+            "Region": "string"
+        }
     }
 }

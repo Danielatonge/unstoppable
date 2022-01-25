@@ -3,11 +3,13 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import {API, Auth, graphqlOperation} from 'aws-amplify';
 import { FontAwesome, AntDesign, Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import * as React from 'react';
 import { ColorSchemeName, Pressable, Image, StyleSheet } from 'react-native';
 
 import Colors from '../constants/Colors';
@@ -22,6 +24,7 @@ import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../typ
 import LinkingConfiguration from './LinkingConfiguration';
 import ProfilePicture from '../components/ProfilePicture';
 import NewPostScreen from '../screens/NewPostScreen';
+import { getUser } from '../src/graphql/queries';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -72,6 +75,27 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
+  const [user, setUser] = useState(null)
+  useEffect(() => {
+    const fetchUser = async () => {
+
+      const userInfo = await Auth.currentAuthenticatedUser({bypassCache: true})
+      if(!userInfo) return;
+
+      try {
+        const userData = await API.graphql(graphqlOperation(getUser, {id: userInfo.attributes.sub}))
+        if (userData) {
+          setUser(userData.data.getUser);
+        }
+      }catch (error) {
+        console.log(error)
+      }
+
+    }
+    fetchUser();
+  }, [])
+
+
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
@@ -92,7 +116,7 @@ function BottomTabNavigator() {
           headerTitle: () => <Image style={styles.logo} source={require('../assets/images/logo1x.png')} />,
           tabBarIcon: ({ color }) => <AntDesign name="home" color={color} size={30} />,
           headerLeft: () => (
-            <ProfilePicture image={'https://picsum.photos/30/30'} size={30} />
+            <ProfilePicture image={user? user.image :''} size={30} />
           ),
           headerRight: () => (
             <Pressable

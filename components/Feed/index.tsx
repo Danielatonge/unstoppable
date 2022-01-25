@@ -1,20 +1,40 @@
-import React from "react";
+import { API, graphqlOperation } from "aws-amplify";
+import React, { useEffect, useState } from "react";
 import { FlatList } from 'react-native';
-import posts from "../../data/posts"
+import { listPosts } from "../../src/graphql/queries";
 import Post from "../Post";
 
-export type FeedProps = {
-    image?: string,
-    size?: number,
 
+const Feed = () => {
+    const [posts, setPosts] = useState([])
+    const [loading, setLoading] = useState(false)
+
+    const fetchPosts = async () => {
+        setLoading(true)
+        try {
+            const postsData = await API.graphql(graphqlOperation(listPosts))
+            setPosts(postsData.data.listPosts.items);
+        } catch (error) {
+            console.log(error)      
+        } finally {
+            setLoading(false)
+        }
+
+    };
+    useEffect(() => {
+        fetchPosts();
+      }, [])
+
+    return (
+        <FlatList
+            data={posts}
+            renderItem={({ item }) => <Post post={item} />}
+            keyExtractor={(item) => item.id}
+            refreshing={loading}
+            onRefresh={fetchPosts}
+        />
+    );
 }
 
-const Feed = ({ image, size = 50 }: FeedProps) => (
-    <FlatList
-        data={posts}
-        renderItem={({ item }) => <Post post={item} />}
-        keyExtractor={(item) => item.id}
-    />
-)
 
 export default Feed;

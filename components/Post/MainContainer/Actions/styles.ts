@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     actions: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 5
+        marginTop: 5,
     },
     action: {
         flexDirection: 'row',
@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     number: {
         color: 'grey',
         alignSelf: 'center',
+        paddingLeft: 5,
     }
 
 })

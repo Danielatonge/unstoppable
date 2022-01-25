@@ -1,0 +1,13 @@
+{
+  "resourceName": "unstoppable01",
+  "policyUUID": "7f4c1b16",
+  "bucketName": "unstoppable6087c47753bc410891611e88de24bd20",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
